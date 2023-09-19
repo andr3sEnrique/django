@@ -12,12 +12,13 @@ class ContactForm(ModelForm):
         self.fields['name'].label = "Nom "
         self.fields['firstname'].label = "Prenom"
         self.fields['email'].label = "mél"
+    
     class Meta:
         model = Contact
-        fields = ('name', 'firstname', 'email','message')
+        fields = ('name', 'firstname', 'email', 'message')
         widgets = {'message': Textarea(attrs={'cols': 60, 'rows': 10}),}
 
-    def contact(request):
+def contact(request):
     # on instancie un formulaire
     form = ContactForm()
     # on teste si on est bien en validation de formulaire (POST)
@@ -28,16 +29,15 @@ class ContactForm(ModelForm):
         if form.is_valid():
             new_contact = form.save()
             # on prépare un nouveau message
-            messages.success(request,'Nouveau contact '+new_contact.name+' '+new_contact.email)
+            messages.success(request, 'Nouveau contact ' + new_contact.name + ' ' + new_contact.email)
             #return redirect(reverse('detail', args=[new_contact.pk] ))
             context = {'pers': new_contact}
-            return render(request,'detail.html', context)
+            return render(request, 'detail.html', context)
     # Si méthode GET, on présente le formulaire
     context = {'form': form}
-    return render(request,'contact.html', context)
+    return render(request, 'contact.html', context)
 
-    
-    def detail(request, cid):
-        contact = Contact.objects.get(pk=cid)
-        context = {'pers': contact}
-        return render(request,'detail.html', context)
+def detail(request, cid):
+    contact = Contact.objects.get(pk=cid)
+    context = {'pers': contact}
+    return render(request, 'detail.html', context)
