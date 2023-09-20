@@ -1,0 +1,13 @@
+# template email_detail.html
+<p>
+Email : {{email}}
+</p>
+<p>
+User : {{user}}
+</p>
+Listes de diffusion :
+<ul>
+{% for liste in listes %}
+    <li>{{ liste }}</li>
+{% endfor %}
+</ul>

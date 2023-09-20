@@ -1,7 +1,13 @@
 from django.db import models
 from datetime import datetime, timedelta, date
-
 from django.utils.html import format_html
+
+class User(models.Model):
+    username = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.username
+
 
 class Task(models.Model):
     name = models.CharField(max_length=250)
@@ -10,6 +16,7 @@ class Task(models.Model):
     closed = models.BooleanField(default=False)
     due_date = models.DateField(null=True)
     schedule_date = models.DateField(default=datetime.now()+timedelta(days=7))
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name="tasks")
 
     def __str__(self):
         return self.name
