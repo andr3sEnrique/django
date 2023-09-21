@@ -1,0 +1,17 @@
+CC = gcc
+OBJ = main.o bonjour.o 
+CFLAG = -std=c11 -Wall -Wextra -O0  
+
+main: $(OBJ)    
+    $(CC) $(CFLAG) $^ -o $@
+
+main.o:main.c bonjour.h
+    $(CC) -c main.c
+
+bonjour.o: bonjour.c bonjour.h
+    $(CC) -c bonjour.c
+
+clean:
+    rm -f main *.o
+
+.PHONY: clean
