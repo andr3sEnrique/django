@@ -2,13 +2,6 @@ from django.db import models
 from datetime import datetime, timedelta, date
 from django.utils.html import format_html
 
-class User(models.Model):
-    username = models.CharField(max_length=150)
-
-    def __str__(self):
-        return self.username
-
-
 class Task(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
@@ -16,7 +9,7 @@ class Task(models.Model):
     closed = models.BooleanField(default=False)
     due_date = models.DateField(null=True)
     schedule_date = models.DateField(default=datetime.now()+timedelta(days=7))
-    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name="tasks")
+
 
     def __str__(self):
         return self.name
@@ -38,3 +31,26 @@ class Task(models.Model):
     colored_due_date.allow_tags = True
 
     
+# utilisateurs
+class Utilisateur(models.Model):
+    nom = models.CharField(max_length=30)
+    prenom = models.CharField(max_length=30, null=True)
+
+    def __str__(self):
+        return "%s %s" % (self.prenom, self.nom)
+
+# emails
+class Email(models.Model):
+    mail = models.CharField(max_length=30)
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE,null=True, related_name='emails')
+
+    def __str__(self):
+        return self.mail
+
+# listes de diffusion
+class ListeDiffusion(models.Model):
+    listeName = models.CharField(max_length=30)
+    email = models.ManyToManyField(Email, related_name='listes')
+
+    def __str__(self):
+        return self.listeName

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from lesTaches.models import Task # import de la class Tas
+from lesTaches.models import Task, Email # import de la class Tas
 # Create your views here.
 
 def task_listing(request):
@@ -18,3 +18,12 @@ def task_listing2(request):
 
 def home(request, name):
     return HttpResponse("Bonjour depuis Django " + name)
+
+#views.py
+def email_detail(request, pk):
+    email = Email.objects.get(pk=pk)
+    user = email.user
+    listes_abonnees = email.listes.all()
+    template = 'email_detail.html'
+    context = {'user': user, 'email': email.mail, 'listes': listes_abonnees }
+    return render(request, template, context)

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content%}
+    <div class="container">
+        <h1 style="text-align: center;">EMAIL DETAILS</h1>
+        <p class="fs-1">
+        Email : {{email}}
+        </p>
+        <p class="fs-1">
+        User : {{user}}
+        </p>
+        <p class="fs-1">
+            Listes de diffusion : 
+            </p>
+        <ul class="fs-1">
+        {% for liste in listes %}
+            <li >{{ liste }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
