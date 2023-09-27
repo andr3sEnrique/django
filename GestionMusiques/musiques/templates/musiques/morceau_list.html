@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Morceaux</h2>
+<ul>
+    {% for morceau in morceau_list %}
+    <li>
+        <h3>Morceau n°{{morceau.pk}}</h3>
+        {{ morceau.titre }} par {{ morceau.artiste }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
